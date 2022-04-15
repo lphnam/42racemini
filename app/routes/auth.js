@@ -10,11 +10,10 @@ const requireAuthJwt = passport.authenticate('jwt', {
 })
 const { disconnect } = require('../controllers/auth')
 const { generateToken } = require('./../controllers/auth/helpers/generateToken')
-
 /*
  * Connect to Strava
  */
-router.post('/auth/strava/connect', requireAuth)
+router.get('/auth/strava/connect', requireAuth)
 
 /*
  * Callback to connect

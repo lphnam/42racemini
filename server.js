@@ -67,6 +67,11 @@ app.use(i18n.init)
 // )
 app.use(cors())
 app.options('*', cors())
+app.all('/*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
+
 app.use(passport.initialize())
 app.use(compression())
 app.use(helmet())
