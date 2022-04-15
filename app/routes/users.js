@@ -1,0 +1,82 @@
+const express = require('express')
+const router = express.Router()
+require('../../config/passport')
+const passport = require('passport')
+const requireAuth = passport.authenticate('jwt', {
+  session: false
+})
+const trimRequest = require('trim-request')
+const {
+  getUsers,
+  createUser,
+  getUser,
+  updateUser,
+  deleteUser
+} = require('../controllers/users')
+
+const {
+  validateCreateUser,
+  validateGetUser,
+  validateUpdateUser,
+  validateDeleteUser
+} = require('../controllers/users/validators')
+
+/*
+ * Users routes
+ */
+
+/*
+ * Get items route
+ */
+router.get(
+  '/',
+  requireAuth,
+  trimRequest.all,
+  getUsers
+)
+
+/*
+ * Create new item route
+ */
+router.post(
+  '/',
+  requireAuth,
+  trimRequest.all,
+  validateCreateUser,
+  createUser
+)
+
+/*
+ * Get item route
+ */
+router.get(
+  '/:id',
+  requireAuth,
+  trimRequest.all,
+  validateGetUser,
+  getUser
+)
+
+/*
+ * Update item route
+ */
+router.patch(
+  '/:id',
+  requireAuth,
+  trimRequest.all,
+  validateUpdateUser,
+  updateUser
+)
+
+/*
+ * Delete item route
+ */
+router.delete(
+  '/:id',
+  requireAuth,
+  trimRequest.all,
+  validateDeleteUser,
+  deleteUser
+)
+
+module.exports = router
